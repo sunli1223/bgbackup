@@ -195,7 +195,7 @@ function mysqldumpcreate {
     mysqldumpcommand=$mysqldumpcommand" -h $backuphisthost"
     [ -n "$backuphistport" ] && mysqldumpcommand=$mysqldumpcommand" -P $backuphistport"
     mysqldumpcommand=$mysqldumpcommand" $backuphistschema"
-    mysqldumpcommand=$mysqldumpcommand" backup_history --skip_add_locks --skip-lock-tables"
+    mysqldumpcommand=$mysqldumpcommand" backup_history --set-gtid-purged=OFF --skip_add_locks --skip-lock-tables"
 }
 
 # Function to create backup_history table if not exists
@@ -468,7 +468,7 @@ fi
 # Set some specific variables
 starttime=$(date +"%Y-%m-%d %H:%M:%S")
 mdate=$(date +%m/%d/%y)    # Date for mail subject. Not in function so set at script start time, not when backup is finished.
-logfile=$logpath/bgbackup_$(date +%Y-%m-%d-%T).log    # logfile
+logfile=$logpath/bgbackup_$(date +%Y-%m-%d-%H-%M-%S).log    # logfile
 
 
 # verify the backup directory exists
